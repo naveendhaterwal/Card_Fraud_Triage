@@ -317,10 +317,4 @@ review_queue = df.sort_values("anomaly_score", ascending=False).head(50)
 
 ---
 
-## 13. References
 
-
-1. A. Dal Pozzolo, O. Caelen, R. A. Johnson and G. Bontempi. *Calibrating Probability with Undersampling for Unbalanced Classification.* IEEE Symposium on Computational Intelligence and Data Mining (CIDM), 2015.
-2. ULB Machine Learning Group. *Credit Card Fraud Detection* dataset. Kaggle. <https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud>
-3. C. M. Bishop. *Pattern Recognition and Machine Learning*, ch. 9 (mixture models and EM). Springer, 2006.
-4. F. Pedregosa et al. *Scikit-learn: Machine Learning in Python.* JMLR 12, 2011.
