@@ -174,6 +174,7 @@ All randomness is seeded (`random_state` in each GMM fit, `default_rng(42)` for 
 
 ## 7. Methodology
 
+
 ### Leakage controls
 
 | Risk | Control |
@@ -213,6 +214,7 @@ Accuracy is not reported: a model that always predicts "legitimate" scores 99.8%
 
 ## 8. Results in detail
 
+
 **Validation AP by number of components** (mean, with the min–max range over 3 seeds):
 
 | K | All 29 features | Selected 12 features |
@@ -245,6 +247,7 @@ Accuracy is not reported: a model that always predicts "legitimate" scores 99.8%
 
 ## 9. Outputs and artefacts
 
+
 | File | Description |
 | --- | --- |
 | `results/figures/fig1_time_diurnal_distribution.png` | Hourly volume, normal vs fraud |
@@ -263,6 +266,7 @@ Accuracy is not reported: a model that always predicts "legitimate" scores 99.8%
 ---
 
 ## 10. Using the trained model
+
 
 ```python
 import joblib
@@ -289,6 +293,7 @@ review_queue = df.sort_values("anomaly_score", ascending=False).head(50)
 
 ## 11. Roadmap
 
+
 - [x] Milestone 1: data inspection, chronological split, leakage-safe preprocessing
 - [x] Milestone 2: exploratory analysis and feature ranking on the training period
 - [x] Milestone 3: GMM component and feature-set selection over multiple seeds
@@ -301,6 +306,7 @@ review_queue = df.sort_values("anomaly_score", ascending=False).head(50)
 
 ## 12. Team & Phase 1 Contributions
 
+
 | Member | Primary Responsibility | Notebook |
 | --- | --- | --- |
 | **Ritik Ranjan** | Data inspection, deduplication, chronological train/validation/test split, leakage-safe preprocessing | `notebooks/01_data_inspection_and_split.ipynb` |
@@ -312,6 +318,7 @@ review_queue = df.sort_values("anomaly_score", ascending=False).head(50)
 ---
 
 ## 13. References
+
 
 1. A. Dal Pozzolo, O. Caelen, R. A. Johnson and G. Bontempi. *Calibrating Probability with Undersampling for Unbalanced Classification.* IEEE Symposium on Computational Intelligence and Data Mining (CIDM), 2015.
 2. ULB Machine Learning Group. *Credit Card Fraud Detection* dataset. Kaggle. <https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud>
