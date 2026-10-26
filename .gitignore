@@ -32,3 +32,4 @@ data/processed/*
 # Local IDEs
 .vscode/
 .idea/
+skills-lock.json
