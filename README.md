@@ -317,4 +317,17 @@ review_queue = df.sort_values("anomaly_score", ascending=False).head(50)
 
 ---
 
+## 13. References
+
+1. **Dal Pozzolo, A., Boracchi, G., Caelen, O., Alippi, C., & Bontempi, G. (2018).** *Credit card fraud detection: a realistic modeling and evaluation framework.* IEEE Transactions on Neural Networks and Learning Systems, 29(8), 3784–3796. [doi:10.1109/TNNLS.2017.2751167](https://doi.org/10.1109/TNNLS.2017.2751167)
+2. **Dal Pozzolo, A., Caelen, O., Johnson, R. A., & Bontempi, G. (2015).** *Calibrating probability with undersampling for unbalanced classification.* In 2015 IEEE Symposium Series on Computational Intelligence (SSCI) (pp. 159–166). [doi:10.1109/SSCI.2015.33](https://doi.org/10.1109/SSCI.2015.33)
+3. **Carcillo, F., Dal Pozzolo, A., Le Borgne, Y. A., Caelen, O., Mazzer, Y., & Bontempi, G. (2018).** *Scarff: a framework for addressing drift in fraud detection with streaming active learning.* Information Sciences, 465, 252–270. [doi:10.1016/j.ins.2018.06.059](https://doi.org/10.1016/j.ins.2018.06.059)
+4. **Chandola, V., Banerjee, A., & Kumar, V. (2009).** *Anomaly detection: A survey.* ACM Computing Surveys (CSUR), 41(3), 1–58. [doi:10.1145/1541880.1541882](https://doi.org/10.1145/1541880.1541882)
+5. **Bishop, C. M. (2006).** *Pattern Recognition and Machine Learning.* Springer, New York. (Chapter 9: Mixture Models and EM).
+6. **Davis, J., & Goadrich, M. (2006).** *The relationship between Precision-Recall and ROC curves.* In Proceedings of the 23rd International Conference on Machine Learning (ICML) (pp. 233–240). [doi:10.1145/1143844.1143874](https://doi.org/10.1145/1143844.1143874)
+7. **Zong, B., Song, Q., Min, M. R., Cheng, W., Lumezanu, C., Cho, D., & Chen, H. (2018).** *Deep autoencoding Gaussian mixture model for unsupervised anomaly detection.* International Conference on Learning Representations (ICLR).
+8. **D'Agostino, R., & Pearson, E. S. (1973).** *Tests for departure from normality. Empirical results for the distributions of $b_2$ and $\sqrt{b_1}$.* Biometrika, 60(3), 613–622.
+9. **Massey, F. J. (1951).** *The Kolmogorov-Smirnov test for goodness of fit.* Journal of the American Statistical Association, 46(253), 68–78.
+10. **Sakurada, M., & Yairi, T. (2014).** *Anomaly detection using autoencoders with nonlinear dimensionality reduction.* In Proceedings of the MLSDA 2nd Workshop on Machine Learning for Sensory Data Analysis (pp. 4–11). [doi:10.1145/2689746.2689747](https://doi.org/10.1145/2689746.2689747)
+
 
