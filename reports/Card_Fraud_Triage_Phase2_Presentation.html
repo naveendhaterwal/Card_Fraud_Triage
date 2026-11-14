@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AML Project 26 - Phase 2 Live Presentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+  
+  @page {
+    size: 16in 9in;
+    margin: 0;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #0b1329;
+    color: #1e293b;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .slide {
+    width: 16in;
+    height: 9in;
+    page-break-after: always;
+    position: relative;
+    background: #f8fafc;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: white;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid #3b82f6;
+  }
+  
+  .header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  
+  .header .badge {
+    font-size: 18px;
+    font-weight: 600;
+    background: #3b82f6;
+    padding: 6px 16px;
+    border-radius: 20px;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 36px 48px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 36px;
+    align-items: stretch;
+  }
+  
+  .content.full {
+    grid-template-columns: 1fr;
+  }
+  
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  
+  .bullet-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: 1.5;
+    color: #334155;
+  }
+  
+  .bullet-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .bullet-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    background: #eff6ff;
+    color: #2563eb;
+    border-radius: 50%;
+    margin-right: 16px;
+    font-weight: 700;
+    font-size: 14px;
+    margin-top: 2px;
+  }
+  
+  .highlight {
+    font-weight: 700;
+    color: #0f172a;
+  }
+  
+  .accent {
+    color: #2563eb;
+    font-weight: 700;
+  }
+  
+  .green {
+    color: #16a34a;
+    font-weight: 700;
+  }
+  
+  .card-img {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .card-img img {
+    max-width: 100%;
+    max-height: 480px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  
+  .caption {
+    margin-top: 16px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #475569;
+  }
+  
+  .title-slide {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px;
+  }
+  
+  .title-slide h1 {
+    font-size: 50px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  
+  .title-slide h2 {
+    font-size: 24px;
+    font-weight: 400;
+    color: #93c5fd;
+    margin-bottom: 48px;
+  }
+  
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 14in;
+  }
+  
+  .team-member {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 24px 16px;
+  }
+  
+  .team-member h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: white;
+  }
+  
+  .team-member p {
+    font-size: 14px;
+    color: #bfdbfe;
+  }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1 -->
+<div class="slide title-slide">
+  <div style="font-size: 18px; font-weight: 700; color: #60a5fa; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;">Applied Machine Learning & Deep Learning · Project 26</div>
+  <h1>Card Fraud Triage via Gaussian Mixture Density Scoring & Autoencoders</h1>
+  <h2>Live Evaluation & Defense Deck · Section A · Team T047</h2>
+  <div class="team-grid">
+    <div class="team-member"><h3>Ritik Ranjan</h3><p>Architecture Design & PyTorch Pipeline</p></div>
+    <div class="team-member"><h3>Archit Mamodiya</h3><p>Training Dynamics & Loss Convergence</p></div>
+    <div class="team-member"><h3>Shagun Vishnoi</h3><p>Controlled Ablations & Tail Noise Discovery</p></div>
+    <div class="team-member"><h3>Aditya Raj</h3><p>Hybrid Rank Fusion Architecture</p></div>
+    <div class="team-member"><h3>Naveen Kumar</h3><p>Out-of-Time Test Evaluation & Triage</p></div>
+  </div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide">
+  <div class="header">
+    <h1>1. Operational Fraud Reality & Phase 1 Recap</h1>
+    <div class="badge">Slide 2 / 10</div>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="bullet-item"><span class="bullet-icon">1</span><div><span class="highlight">Extreme Class Imbalance:</span> Only 0.13% of swipes are fraud (~1 in 767). Accuracy is useless (a dumb model predicting 0 gets 99.87% accuracy).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">2</span><div><span class="highlight">Verification Delay:</span> Real-world chargeback disputes take 30–90 days to settle. Models must be unsupervised.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">3</span><div><span class="highlight">Analyst Queue Budget:</span> Bank triage desks can only audit ~50 transactions/day (<span class="accent">FPR &le; 0.5% budget</span>).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">4</span><div><span class="highlight">Phase 1 GMM Baseline:</span> K=3 full covariance Gaussian Mixture Model on normal spending achieved <span class="green">AP = 0.6121</span>, intercepting 56/74 frauds.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">5</span><div><span class="highlight">The GMM Limitation:</span> Quadratic ellipsoidal boundaries cannot capture intricate non-linear manifold curvatures.</div></div>
+    </div>
+    <div class="card-img">
+      <img src="results/figures/fig1_time_diurnal_distribution.png" alt="Nocturnal Pattern">
+      <div class="caption">Diurnal Fraud Pattern: 10x Spike at 2:00 AM (The 2:47 AM Scenario)</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide">
+  <div class="header">
+    <h1>2. Deep Learning Formulation: Non-Linear Autoencoders</h1>
+    <div class="badge">Slide 3 / 10</div>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="bullet-item"><span class="bullet-icon">1</span><div><span class="highlight">The Manifold Hypothesis (Sakurada & Yairi 2014):</span> Legitimate spending patterns concentrate along a smooth, low-dimensional non-linear manifold in 29-D space.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">2</span><div><span class="highlight">Informational Bottleneck:</span> Squeezing 29 features down to 8 latent variables forces the network to discard noise and retain essential spending dynamics.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">3</span><div><span class="highlight">Anomaly Scoring:</span> Unsupervised Reconstruction Error <span class="accent">S_AE(x) = (1/d) ||x - x_hat||^2</span>.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">4</span><div><span class="highlight">Normal Reconstruction:</span> Familiar normal transactions reconstruct faithfully with negligible error (<span class="green">S_AE &lt; 0.6</span>).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">5</span><div><span class="highlight">Fraud Reconstruction Blowup:</span> Novel fraudulent spending deviates orthogonally, causing reconstruction blowup (<span class="accent">S_AE &gt; 3.7</span>).</div></div>
+    </div>
+    <div class="card-img">
+      <img src="results/figures/fig_ae_concept_architecture.png" alt="AE Concept Architecture">
+      <div class="caption">Dual-Path Reconstruction Pipeline: Normal vs. Fraud</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide">
+  <div class="header">
+    <h1>3. Funnel Architecture Design & Parameter Parity</h1>
+    <div class="badge">Slide 4 / 10</div>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="bullet-item"><span class="bullet-icon">1</span><div><span class="highlight">Symmetric Funnel Topology:</span> 29 &rarr; 20 &rarr; 12 &rarr; 8 (Bottleneck) &rarr; 12 &rarr; 20 &rarr; 29. Gradual compression preserves hierarchical correlations.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">2</span><div><span class="highlight">LeakyReLU Activation (&alpha;=0.1):</span> Standardized input features have negative values; LeakyReLU avoids dead dying ReLU neurons and preserves gradient flow.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">3</span><div><span class="highlight">BatchNorm1d:</span> Placed after each linear layer to eliminate internal covariate shift and accelerate convergence.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">4</span><div><span class="highlight">Linear Output (No Sigmoid):</span> Standardized input dimensions span (-&infin;, +&infin;); a Sigmoid would artificially crush reconstruction variance.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">5</span><div><span class="highlight">Strict Parameter Parity:</span> Exactly <span class="accent">2,061 trainable parameters</span> vs. GMM's 1,394 parameters. Absolutely no unfair deep network parameter bloat!</div></div>
+    </div>
+    <div class="card-img">
+      <img src="results/figures/fig_ae_layer_architecture.png" alt="Layer Architecture">
+      <div class="caption">7-Layer Symmetric Topology with Parameter Budget Breakdown</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5 -->
+<div class="slide">
+  <div class="header">
+    <h1>4. Training Dynamics & Loss Convergence</h1>
+    <div class="badge">Slide 5 / 10</div>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="bullet-item"><span class="bullet-icon">1</span><div><span class="highlight">Strict Isolation:</span> Trained exclusively on 169,893 clean normal transactions (0 frauds) using the Adam optimizer.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">2</span><div><span class="highlight">Batch Size 256:</span> Balances gradient smoothness with memory efficiency (664 batches per epoch).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">3</span><div><span class="highlight">Learning Rate Scheduling:</span> Initial rate 10^-3 with ReduceLROnPlateau (factor 0.5, patience 3) for smooth fine-grained convergence.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">4</span><div><span class="highlight">Hardware Acceleration:</span> Executed seamlessly on native Apple Silicon GPU (MPS), completing 40 epochs in under 3 minutes.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">5</span><div><span class="highlight">Generalization Confirmed:</span> Train loss (0.575) and validation loss (0.574) track tightly without a hint of overfitting.</div></div>
+    </div>
+    <div class="card-img">
+      <img src="results/figures/fig8_ae_learning_curve.png" alt="Figure 8 Learning Curve">
+      <div class="caption">Figure 8: Autoencoder Loss Dynamics Over 40 Epochs</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6 -->
+<div class="slide">
+  <div class="header">
+    <h1>5. Controlled Ablations & The Tail-Noise Discovery</h1>
+    <div class="badge">Slide 6 / 10</div>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="bullet-item"><span class="bullet-icon">1</span><div><span class="highlight">7-Model Grid:</span> Systematically varied Bottleneck dimensions (4, 8, 14), Dropout (0.1, 0.2), Denoising noise, and Huber loss.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">2</span><div><span class="highlight">Champion Model:</span> <span class="green">AE-Dropout0.2</span> achieved champion performance (Val AP = 0.7049, Val ROC = 0.9472).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">3</span><div><span class="highlight">The Viva Insight (Tail-Feature Noise):</span> Raw Euclidean MSE treats all 29 dimensions equally. Minor tail PCA features (V28, V20) have noisy outliers that spike MSE and cause false alarms!</div></div>
+      <div class="bullet-item"><span class="bullet-icon">4</span><div><span class="highlight">Why GMM Succeeded:</span> GMM's full covariance matrix (&Sigma;^-1) acts as a Mahalanobis distance, dividing each dimension by its variance (1 / &sigma;_j^2).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">5</span><div><span class="highlight">Dropout as Noise Shield:</span> 20% Dropout prevents the autoencoder from memorizing noisy tail coordinates.</div></div>
+    </div>
+    <div class="card-img">
+      <img src="results/figures/fig3_top_divergent_features_kde.png" alt="Feature KDEs">
+      <div class="caption">Top KS Discriminant Features (V14, V12, V10) vs Noisy Tail Features</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7 -->
+<div class="slide">
+  <div class="header">
+    <h1>6. Innovation: GMM + Autoencoder Hybrid Fusion</h1>
+    <div class="badge">Slide 7 / 10</div>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="bullet-item"><span class="bullet-icon">1</span><div><span class="highlight">Complementary Synergy:</span> GMM excels at covariance noise dampening; Autoencoder excels at non-linear manifold curvature.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">2</span><div><span class="highlight">The Scale Incompatibility:</span> GMM negative log-likelihood spans [0, 500,000+], while AE reconstruction MSE spans [0, 50]. Raw addition is impossible.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">3</span><div><span class="highlight">Percentile Rank Normalization:</span> Converts both scores to uniform empirical percentiles: <span class="accent">S_norm = Rank(S) / N &isin; [0, 1]</span>.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">4</span><div><span class="highlight">Linear Convex Combination:</span> <span class="accent">S_hybrid = &alpha; S_norm_GMM + (1 - &alpha;) S_norm_AE</span>.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">5</span><div><span class="highlight">Zero Leakage:</span> Blending weight &alpha; is calibrated strictly on the validation set, never touching the frozen test set.</div></div>
+    </div>
+    <div class="card-img">
+      <img src="results/figures/fig_hybrid_concept_pipeline.png" alt="Hybrid Concept Pipeline">
+      <div class="caption">Percentile Rank-Normalized Score Fusion Architecture</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8 -->
+<div class="slide">
+  <div class="header">
+    <h1>7. Out-of-Time Test Benchmark (N=56,746, 74 Frauds)</h1>
+    <div class="badge">Slide 8 / 10</div>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="bullet-item"><span class="bullet-icon">1</span><div><span class="highlight">Average Precision (AP / PR-AUC):</span> GMM 0.6121 &rarr; Autoencoder <span class="green">0.6752 [0.560, 0.792]</span> (<span class="green">+6.31% Gain!</span>).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">2</span><div><span class="highlight">ROC-AUC:</span> GMM 0.9229 &rarr; Autoencoder <span class="green">0.9650 [0.939, 0.987]</span> (<span class="green">+4.21% Gain!</span>).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">3</span><div><span class="highlight">Operational Recall (FPR &le; 0.5%):</span> GMM 75.68% (56/74) &rarr; Hybrid <span class="green">81.08% (60/74)</span> (<span class="green">+4 extra thieves caught!</span>).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">4</span><div><span class="highlight">Top-25 Queue Precision:</span> GMM 72.0% &rarr; Autoencoder <span class="green">96.0%</span> (24 out of 25 alerts are confirmed fraud!).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">5</span><div><span class="highlight">Reduction in Missed Fraud:</span> 18 missed &rarr; 14 missed (<span class="green">22.2% reduction in lost fraud volume</span>).</div></div>
+    </div>
+    <div class="card-img">
+      <img src="results/figures/fig9_model_pr_comparison.png" alt="Figure 9 PR Curves">
+      <div class="caption">Figure 9: Precision-Recall Trajectories with 95% Bootstrap CIs</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9 -->
+<div class="slide">
+  <div class="header">
+    <h1>8. Confusion Matrices & Production Latency</h1>
+    <div class="badge">Slide 9 / 10</div>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="bullet-item"><span class="bullet-icon">1</span><div><span class="highlight">Strict FPR Adherence:</span> Thresholds locked on validation (AE &tau;=3.737 &rarr; 0.33% FPR; Hybrid &tau;=0.994 &rarr; 0.47% FPR), both strictly inside the &le;0.5% budget.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">2</span><div><span class="highlight">Bank Authorization SLA:</span> Production card swipes require &lt; 50 ms decision latency.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">3</span><div><span class="highlight">GMM Scoring Latency:</span> 1.8 ms per 100 transactions (Full 29x29 matrix inverse evaluations).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">4</span><div><span class="highlight">Autoencoder Latency:</span> <span class="green">0.3 ms per 100 transactions</span> (Single PyTorch forward pass on standard CPU).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">5</span><div><span class="highlight">6x Speedup:</span> Autoencoder delivers 6x higher gateway throughput (~333,000 transactions/sec).</div></div>
+    </div>
+    <div class="card-img">
+      <img src="results/figures/fig10_ae_test_confusion_matrix.png" alt="Figure 10 Confusion Matrix">
+      <div class="caption">Figure 10: Autoencoder Champion Confusion Matrix (59/74 Caught)</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10 -->
+<div class="slide">
+  <div class="header">
+    <h1>9. Conclusions & Live Viva Defense Ownership</h1>
+    <div class="badge">Slide 10 / 10</div>
+  </div>
+  <div class="content full">
+    <div class="card">
+      <div style="font-size: 24px; font-weight: 700; color: #0f172a; margin-bottom: 16px;">Core Research Takeaways:</div>
+      <div class="bullet-item"><span class="bullet-icon">&check;</span><div><span class="highlight">Deep Autoencoders Outperform GMMs:</span> Delivering <span class="green">+6.31% AP</span>, <span class="green">+4.21% ROC-AUC</span>, and <span class="green">96.0% Top-25 Precision</span> at equal parameter parity (2,061 vs 1,394).</div></div>
+      <div class="bullet-item"><span class="bullet-icon">&check;</span><div><span class="highlight">Hybrid Model Delivers Maximum Safety:</span> Capturing <span class="green">81.08% of out-of-time fraud</span> (60 of 74 frauds) under a strict 0.5% false-alarm budget.</div></div>
+      <div class="bullet-item"><span class="bullet-icon">&check;</span><div><span class="highlight">Tail Noise Discovery:</span> Unweighted Euclidean MSE is susceptible to tail PCA noise; Mahalanobis covariance dampening and Dropout regularization resolve this.</div></div>
+      
+      <div style="font-size: 24px; font-weight: 700; color: #0f172a; margin-top: 24px; margin-bottom: 16px;">Team Member Live Defense Ownership:</div>
+      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;">
+        <div style="background: #f1f5f9; padding: 16px; border-radius: 8px;"><b style="color: #1e3a8a;">Ritik Ranjan</b><br><span style="font-size: 14px; color: #475569;">Problem framing & Funnel topology design</span></div>
+        <div style="background: #f1f5f9; padding: 16px; border-radius: 8px;"><b style="color: #1e3a8a;">Archit Mamodiya</b><br><span style="font-size: 14px; color: #475569;">Training dynamics, MPS acceleration & EDA</span></div>
+        <div style="background: #f1f5f9; padding: 16px; border-radius: 8px;"><b style="color: #1e3a8a;">Shagun Vishnoi</b><br><span style="font-size: 14px; color: #475569;">Ablations & Tail-feature noise discovery</span></div>
+        <div style="background: #f1f5f9; padding: 16px; border-radius: 8px;"><b style="color: #1e3a8a;">Aditya Raj</b><br><span style="font-size: 14px; color: #475569;">Hybrid Rank Fusion & validation calibration</span></div>
+        <div style="background: #f1f5f9; padding: 16px; border-radius: 8px;"><b style="color: #1e3a8a;">Naveen Kumar</b><br><span style="font-size: 14px; color: #475569;">Test benchmarking, CIs & production triage</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

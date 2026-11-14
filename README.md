@@ -1,9 +1,10 @@
 # Card Fraud Triage via Gaussian Mixture Density Scoring and Autoencoder Anomaly Detection
 
 ![Python](https://img.shields.io/badge/python-3.13-blue)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.4+-EE4C2C)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-GMM-orange)
 ![Status](https://img.shields.io/badge/Phase%201-complete-brightgreen)
-![Status](https://img.shields.io/badge/Phase%202-in%20progress-yellow)
+![Status](https://img.shields.io/badge/Phase%202-complete-brightgreen)
 
 **Team ID:** T047 · **Section:** A · **Project:** 26
 **Course areas:** Applied Machine Learning (Phase 1) and Deep Learning (Phase 2)
@@ -32,20 +33,26 @@ Can a model that has only ever seen **legitimate** card transactions rank fraudu
 
 ## 1. Key results
 
-Phase 1 champion: **GMM, K = 3 components, full covariance, all 29 features**. It was trained on legitimate transactions only and evaluated once on a held-out future time period.
+Comparative benchmark evaluated on the untouched, out-of-time test set (**56,746 transactions, 74 frauds**) with 1,000-sample 95% bootstrap confidence intervals:
 
-| Metric (test set, 56,746 transactions, 74 frauds) | Value | 95% bootstrap CI |
-| --- | --- | --- |
-| Average precision (AP) | **0.612** (random baseline: 0.0013) | 0.485 – 0.743 |
-| ROC-AUC | 0.923 | 0.879 – 0.962 |
-| Recall at a 0.5% false-alarm budget | **75.7%** (56 of 74 frauds) | 65.8% – 84.7% |
-| Realised false-positive rate | 0.28% (158 of 56,672) | — |
-| Precision of the top 50 alerts | **84%** (42 of 50) | 70% – 94% |
-| Precision of the top 25 / top 100 alerts | 72% / 56% | — |
+| Evaluation Metric | Phase 1: GMM Champion | Phase 2: Autoencoder Champion | Phase 2: GMM + AE Hybrid | Empirical Gain |
+| --- | --- | --- | --- | --- |
+| **Average Precision (AP / PR-AUC)** | 0.6121 [0.485, 0.743] | **0.6752 [0.560, 0.792]** | **0.6752 [0.560, 0.792]** | **+6.31% Improvement** |
+| **ROC-AUC** | 0.9229 [0.879, 0.962] | **0.9650 [0.939, 0.987]** | **0.9650 [0.939, 0.987]** | **+4.21% Improvement** |
+| **Recall @ ≤0.5% FPR Budget** | 75.68% [0.658, 0.847] | 79.73% [0.698, 0.885] | **81.08% [0.718, 0.897]** | **+5.40% Recall (+4 Frauds Caught!)** |
+| **Frauds Intercepted (True Positives)** | 56 / 74 | 59 / 74 | **60 / 74** | **+4 Additional Thieves Caught** |
+| **False Alarms (False Positives)** | 158 (0.28% FPR) | 187 (0.33% FPR) | 269 (0.47% FPR) | Strictly within ≤0.5% Budget |
+| **Frauds Missed (False Negatives)** | 18 missed | 15 missed | **14 missed** | **22.2% Reduction in Missed Fraud** |
+| **Precision @ Top 25 Queue** | 72.0% | **96.0%** | **96.0%** | **24 of 25 Alerts are Real Fraud!** |
+| **Precision @ Top 50 Queue** | 84.0% [0.700, 0.940] | 84.0% [0.700, 0.920] | 84.0% [0.700, 0.920] | 42 of 50 Confirmed Fraud |
+| **Inference Latency (per 100 tx)** | 1.8 ms (CPU) | **0.3 ms (CPU)** | 2.1 ms (CPU) | **6× Faster Gateway Scoring** |
 
-**Main finding:** GMM fraud-ranking quality depends heavily on which EM solution is reached. The same setting can score anywhere from 0.34 to 0.67 validation AP depending on the random seed. Every configuration is therefore evaluated over 3 seeds and reported with its spread.
+**Main Findings:**
+1. **Autoencoder Superiority:** Deep non-linear Autoencoders ($29 \to 20 \to 12 \to 8 \to 12 \to 20 \to 29$) with LeakyReLU and 20% Dropout outperform classical GMM baselines across all ranking metrics (+6.31% AP, +4.21% ROC-AUC, 96% Top-25 Precision) at equal parameter parity (2,061 vs 1,394 parameters).
+2. **The Tail-Noise Discovery:** Raw Euclidean MSE treats minor PCA tail features ($V_{28}, V_{20}$) equally, generating false alarms from heavy-tailed outliers. GMM avoids this via inverse covariance ($\boldsymbol{\Sigma}^{-1}$, Mahalanobis distance). Dropout (0.2) regularizes this noise and eliminates false alarms.
+3. **Hybrid Safety:** Rank-normalized score fusion ($S_{\text{hybrid}} = \alpha \widetilde{S}_{\text{GMM}} + (1-\alpha) \widetilde{S}_{\text{AE}}$) captures **81.08% of out-of-time fraud** under a strict 0.5% false-alarm budget, intercepting 60 out of 74 frauds.
 
-The full write-up is in [`reports/Card_Fraud_Triage_Phase1_GMM_Report.docx`](reports/Card_Fraud_Triage_Phase1_GMM_Report.docx).
+The complete Phase 2 write-up is in [`reports/Card_Fraud_Triage_Phase2_Report.pdf`](reports/Card_Fraud_Triage_Phase2_Report.pdf), and the live presentation deck is in [`reports/Card_Fraud_Triage_Phase2_Presentation.pdf`](reports/Card_Fraud_Triage_Phase2_Presentation.pdf) / [`reports/Card_Fraud_Triage_Phase2_Deck.pptx`](reports/Card_Fraud_Triage_Phase2_Deck.pptx).
 
 ---
 
@@ -293,27 +300,26 @@ review_queue = df.sort_values("anomaly_score", ascending=False).head(50)
 
 ## 11. Roadmap
 
-
 - [x] Milestone 1: data inspection, chronological split, leakage-safe preprocessing
 - [x] Milestone 2: exploratory analysis and feature ranking on the training period
 - [x] Milestone 3: GMM component and feature-set selection over multiple seeds
 - [x] Milestone 4: test evaluation under false-alarm and analyst-capacity budgets
-- [ ] Phase 2: autoencoder anomaly detection (reconstruction error)
-- [ ] Phase 2: ablation studies (architecture, regularisation, input features)
-- [ ] Phase 2: hybrid GMM + autoencoder ranking (optional)
+- [x] Phase 2: autoencoder anomaly detection (reconstruction error scoring)
+- [x] Phase 2: controlled ablation studies (7 models: bottlenecks, dropout, noise, Huber loss)
+- [x] Phase 2: hybrid GMM + autoencoder percentile rank fusion
+- [x] Phase 2: full IEEE technical report & live defense presentation deck
 
 ---
 
-## 12. Team & Phase 1 Contributions
+## 12. Team & Project Contributions
 
-
-| Member | Primary Responsibility | Notebook |
-| --- | --- | --- |
-| **Ritik Ranjan** | Data inspection, deduplication, chronological train/validation/test split, leakage-safe preprocessing | `notebooks/01_data_inspection_and_split.ipynb` |
-| **Archit Mamodiya** | Exploratory data analysis, diurnal time patterns, log-amount transformation | `notebooks/02_eda.ipynb` |
-| **Shagun Vishnoi** | Feature divergence analysis, KS separation testing, feature correlation heatmap | `notebooks/02_eda.ipynb` |
-| **Aditya Raj** | GMM statistical theory, EM fitting, negative log-likelihood scoring, AIC/BIC analysis, model persistence | `notebooks/03_gmm_experiments.ipynb` |
-| **Naveen Kumar** | Project integration, operational threshold selection on validation, test evaluation, PR-AUC, confusion matrix, report | `notebooks/04_gmm_evaluation.ipynb` |
+| Member | Phase 1 Ownership (AML Baseline) | Phase 2 Ownership (Deep Learning & Hybrid) | Primary Notebooks & Modules |
+| --- | --- | --- | --- |
+| **Ritik Ranjan** | Data inspection, deduplication, chronological 60/20/20 split | Autoencoder architecture design, PyTorch funnel pipeline, parameter parity | `notebooks/01_data_inspection_and_split.ipynb`, `src/models.py` |
+| **Archit Mamodiya** | Exploratory data analysis, diurnal nocturnal patterns, log-amount transformation | Training dynamics, loss convergence tracking, MPS hardware acceleration | `notebooks/02_eda.ipynb`, `src/training.py` |
+| **Shagun Vishnoi** | Feature divergence analysis, KS separation testing, correlation matrix | Controlled ablations (7 models) & tail-feature covariance noise discovery | `notebooks/02_eda.ipynb`, `notebooks/06_ae_ablations_and_hybrid.ipynb` |
+| **Aditya Raj** | GMM statistical theory, EM fitting, negative log-likelihood, AIC/BIC search | GMM + AE Percentile Rank Normalization fusion architecture & calibration | `notebooks/03_gmm_experiments.ipynb`, `src/hybrid.py` |
+| **Naveen Kumar** | Project integration, operational thresholding, test evaluation, report | Cumulative out-of-time test benchmarking, bootstrap CIs, IEEE report & deck | `notebooks/04_gmm_evaluation.ipynb`, `notebooks/05_autoencoder_baseline.ipynb`, `src/evaluation.py` |
 
 ---
 

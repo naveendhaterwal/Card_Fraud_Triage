@@ -1,0 +1,31 @@
+{
+    "model": "Phase 2 AE (AE-Dropout0.2)",
+    "test_average_precision": 0.6752322334510547,
+    "test_average_precision_95ci": [
+        0.5596677346476381,
+        0.7922280456171508
+    ],
+    "test_roc_auc": 0.9649734079081905,
+    "test_roc_auc_95ci": [
+        0.9394448060346471,
+        0.9866139434635915
+    ],
+    "chosen_threshold": 3.737276030494856,
+    "recall_at_0.5pct_fpr": 0.7972972972972973,
+    "recall_at_0.5pct_fpr_95ci": [
+        0.6976376214306741,
+        0.8851084538375973
+    ],
+    "false_positive_rate": 0.003299689440993789,
+    "precision_top_25": 0.96,
+    "precision_top_50": 0.84,
+    "precision_top_50_95ci": [
+        0.7,
+        0.92
+    ],
+    "precision_top_100": 0.56,
+    "true_positives": 59,
+    "false_positives": 187,
+    "false_negatives": 15,
+    "true_negatives": 56485
+}

@@ -1,0 +1,31 @@
+{
+    "model": "Phase 2 Hybrid (alpha=0.0)",
+    "test_average_precision": 0.6752322334510547,
+    "test_average_precision_95ci": [
+        0.5596677346476381,
+        0.7922280456171508
+    ],
+    "test_roc_auc": 0.9649734079081905,
+    "test_roc_auc_95ci": [
+        0.9394448060346471,
+        0.9866139434635915
+    ],
+    "chosen_threshold": 0.9942119871704498,
+    "recall_at_0.5pct_fpr": 0.8108108108108109,
+    "recall_at_0.5pct_fpr_95ci": [
+        0.7179166666666666,
+        0.8965738284703801
+    ],
+    "false_positive_rate": 0.004746612083568605,
+    "precision_top_25": 0.96,
+    "precision_top_50": 0.84,
+    "precision_top_50_95ci": [
+        0.7,
+        0.92
+    ],
+    "precision_top_100": 0.56,
+    "true_positives": 60,
+    "false_positives": 269,
+    "false_negatives": 14,
+    "true_negatives": 56403
+}

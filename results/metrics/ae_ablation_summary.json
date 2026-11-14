@@ -1,0 +1,79 @@
+[
+    {
+        "Model": "AE-Latent4",
+        "Latent Dim": 4,
+        "Dropout": 0.0,
+        "Noise": 0.0,
+        "Loss": "mse",
+        "Val Loss": 0.7286,
+        "Val ROC-AUC": 0.9481,
+        "Val AP (All 29)": 0.0548,
+        "Val AP (Top 5)": 0.696
+    },
+    {
+        "Model": "AE-Latent8",
+        "Latent Dim": 8,
+        "Dropout": 0.0,
+        "Noise": 0.0,
+        "Loss": "mse",
+        "Val Loss": 0.5741,
+        "Val ROC-AUC": 0.9473,
+        "Val AP (All 29)": 0.0595,
+        "Val AP (Top 5)": 0.6791
+    },
+    {
+        "Model": "AE-Latent14",
+        "Latent Dim": 14,
+        "Dropout": 0.0,
+        "Noise": 0.0,
+        "Loss": "mse",
+        "Val Loss": 0.5337,
+        "Val ROC-AUC": 0.9249,
+        "Val AP (All 29)": 0.0461,
+        "Val AP (Top 5)": 0.7014
+    },
+    {
+        "Model": "AE-Dropout0.1",
+        "Latent Dim": 8,
+        "Dropout": 0.1,
+        "Noise": 0.0,
+        "Loss": "mse",
+        "Val Loss": 0.7087,
+        "Val ROC-AUC": 0.9519,
+        "Val AP (All 29)": 0.0532,
+        "Val AP (Top 5)": 0.6771
+    },
+    {
+        "Model": "AE-Dropout0.2",
+        "Latent Dim": 8,
+        "Dropout": 0.2,
+        "Noise": 0.0,
+        "Loss": "mse",
+        "Val Loss": 0.868,
+        "Val ROC-AUC": 0.9491,
+        "Val AP (All 29)": 0.0429,
+        "Val AP (Top 5)": 0.7049
+    },
+    {
+        "Model": "DAE-Noise0.1",
+        "Latent Dim": 8,
+        "Dropout": 0.0,
+        "Noise": 0.1,
+        "Loss": "mse",
+        "Val Loss": 0.5737,
+        "Val ROC-AUC": 0.9427,
+        "Val AP (All 29)": 0.0576,
+        "Val AP (Top 5)": 0.6452
+    },
+    {
+        "Model": "AE-HuberLoss",
+        "Latent Dim": 8,
+        "Dropout": 0.0,
+        "Noise": 0.0,
+        "Loss": "huber",
+        "Val Loss": 0.1642,
+        "Val ROC-AUC": 0.9139,
+        "Val AP (All 29)": 0.0301,
+        "Val AP (Top 5)": 0.6323
+    }
+]
