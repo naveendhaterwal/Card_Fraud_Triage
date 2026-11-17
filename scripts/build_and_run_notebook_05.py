@@ -96,18 +96,40 @@ print(f"Compute Device:  {str(device).upper()}")
 """))
 
     # ----------------------------------------------------
-    # Cell 3: Step 2 - Load Data
+    # Cell 3: Step 2 - Load Data (Before vs. After)
     # ----------------------------------------------------
-    cells.append(nbf.v4.new_markdown_cell(r"""### Step 2: Loading our data (Zero Cheating / Zero Leakage)
-We load the same 60/20/20 time splits we created back in Milestone 1:
-- **`train_legit.csv` (169,893 rows):** Contains **100% clean legitimate transactions**. Every single fraud was removed so the model only learns what honest people do.
-- **`val_mixed.csv` (56,745 rows, 57 frauds):** Our practice exam to check if the alarm is working and tune our settings.
-- **`test_mixed.csv` (56,746 rows, 74 frauds):** The final exam — kept completely untouched and frozen!
+    cells.append(nbf.v4.new_markdown_cell(r"""### Step 2: Loading & Preprocessing the Data (Before vs. After)
 
-We also reuse the exact same `StandardScaler` from Phase 1 so we don't cheat or leak future test information.
+#### 1. What was the dataset BEFORE?
+Back in Milestone 1, we started with `creditcard.csv` containing **284,807 card swipes** and **31 columns**:
+- `Time`: Seconds elapsed since the first transaction (0 to 172,792 seconds = 48 hours).
+- `V1` to `V28`: PCA-transformed customer spending features.
+- `Amount`: The raw transaction amount in Euros (e.g., €149.62, €2.69, €378.66). Highly skewed (from €0.00 up to €25,691!).
+- `Class`: `0` for normal honest transactions, `1` for confirmed fraud (only 492 total frauds = 0.17%).
+
+#### 2. How did we split and prepare it?
+1. **Deduplication:** Dropped 1,081 duplicate rows $\rightarrow$ 283,726 clean rows.
+2. **Chronological 60 / 20 / 20 Split:** We split strictly by time to simulate real life:
+   - **Training Set (First 60% of time):** We filtered out all 342 frauds to create `train_legit.csv` (**169,893 rows, 0 frauds**). The Autoencoder studies only honest cardholders!
+   - **Validation Set (Middle 20% of time):** `val_mixed.csv` (**56,745 rows, 57 frauds**).
+   - **Test Set (Last 20% of time):** `test_mixed.csv` (**56,746 rows, 74 frauds**).
+3. **The 3 Transformation Steps for PyTorch:**
+   - **Drop `Time` & `Class`:** Time causes temporal drift, and `Class` is hidden because the model is unsupervised.
+   - **Log-transform `Amount`:** $\log(1 + \text{Amount})$ compresses extreme numbers so a single €5,000 purchase doesn't break gradient descent.
+   - **StandardScaler:** Reuses the mean $\mu$ and spread $\sigma$ fitted only on `X_train`. Every feature now has a mean of 0 and variance of 1.
+
+Let's inspect the data **BEFORE** and **AFTER** preprocessing in code:
 """))
 
-    cells.append(nbf.v4.new_code_cell("""# Load data using our modular loader from src/data.py
+    cells.append(nbf.v4.new_code_cell("""# 1. Inspect the dataset BEFORE preprocessing (Raw CSV as saved on disk)
+raw_train_df = pd.read_csv('../data/processed/train_legit.csv')
+print("=" * 70)
+print(f"1. BEFORE PREPROCESSING: Raw CSV on Disk ({raw_train_df.shape[0]:,} rows, {raw_train_df.shape[1]} columns)")
+print("Notice: 'Time' and raw 'Amount' are present, and 'Class' is 0 (all honest).")
+print("=" * 70)
+display(raw_train_df[['Time', 'V1', 'V2', 'V14', 'Amount', 'Class']].head(4))
+
+# 2. Load and preprocess using our modular pipeline in src/data.py
 data = load_and_preprocess_data(data_dir='../data/processed', models_dir='../results/models')
 
 X_train = data['X_train']
@@ -117,14 +139,24 @@ y_val   = data['y_val']
 y_test  = data['y_test']
 features = data['features']
 
-print(f"Total input features: {len(features)}")
-print(f"Training Data:   {X_train.shape[0]:,} normal transactions (0 frauds)")
-print(f"Validation Data: {X_val.shape[0]:,} transactions ({np.sum(y_val)} frauds)")
-print(f"Test Data:       {X_test.shape[0]:,} transactions ({np.sum(y_test)} frauds - FROZEN)")
+# 3. Inspect the dataset AFTER preprocessing (Clean 29-D Matrix ready for Neural Network)
+after_train_df = pd.DataFrame(X_train, columns=features)
+print("\\n" + "=" * 70)
+print(f"2. AFTER PREPROCESSING: Scaled Feature Matrix ({X_train.shape[0]:,} rows, {X_train.shape[1]} features)")
+print("Notice: 'Time' & 'Class' are removed. 'Amount' is log-scaled & standardized!")
+print(f"Mean of features: {X_train.mean():.4f} (centered at 0) | Std of features: {X_train.std():.4f} (spread of 1)")
+print("=" * 70)
+display(after_train_df[['V1', 'V2', 'V14', 'Amount']].head(4))
 
-# Package into PyTorch DataLoaders with batch size of 256
+# Summary of splits
+print(f"\\nTotal Input Features: {len(features)}")
+print(f"Training Data (X_train):   {X_train.shape[0]:,} normal transactions (0 frauds)")
+print(f"Validation Data (X_val):   {X_val.shape[0]:,} transactions ({np.sum(y_val)} frauds)")
+print(f"Test Data (X_test):        {X_test.shape[0]:,} transactions ({np.sum(y_test)} frauds - FROZEN)")
+
+# Package into PyTorch DataLoaders with mini-batch size of 256
 train_loader, val_loader = get_dataloaders(X_train, X_val, batch_size=256)
-print(f"Batches per epoch: {len(train_loader):,}")
+print(f"Batches per epoch:         {len(train_loader):,} batches of size 256")
 """))
 
     # ----------------------------------------------------
